@@ -11,19 +11,13 @@ git clone https://github.com/KarenKuro/betnetics_test.git
 cd betnetics_test
 ```
 
-## 2.Установи зависимости:
-
-```bash
-npm install
-```
-
-## 3. Создай файл .env в корне проекта на основе .env.example:
+## 2. Создай файл .env в корне проекта на основе .env.example:
 
 ```bash
 cp .env.example .env
 ```
 
-## 4. Запуск через Docker Compose
+## 3. Запуск через Docker Compose
 
 # Проект состоит из трёх контейнеров:
 
