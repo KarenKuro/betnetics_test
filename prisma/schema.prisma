@@ -1,0 +1,109 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URI")
+}
+
+model TournamentInfo {
+  id Int @id
+
+  caption String
+
+  sports Sport[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("tournaments_info")
+}
+
+model Sport {
+  id Int @id
+
+  parentId Int?    @map("parent_id")
+  parent   Sport?  @relation("parent_child", fields: [parentId], references: [id], onDelete: SetNull)
+  children Sport[] @relation("parent_child")
+
+  kind           String
+  regionId       Int?    @map("region_id")
+  sortOrder      String  @map("sort_order")
+  name           String
+  searchKeyWords String? @map("search_key_words")
+
+  tournamentInfoId Int?            @map("tournament_info_id")
+  TournamentInfo   TournamentInfo? @relation(fields: [tournamentInfoId], references: [id], onDelete: NoAction)
+
+  sportCategoryId Int? @map("sport_category_id")
+  geoCategoryId   Int? @map("geo_category_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  Event Event[]
+
+  @@map("sports")
+}
+
+model Event {
+  id Int @id
+
+  parentId Int?    @map("parent_id")
+  parent   Event?  @relation("parent_child", fields: [parentId], references: [id], onDelete: SetNull)
+  children Event[] @relation("parent_child")
+
+  sortOrder String @map("sort_order")
+  level     Int
+  num       Int
+
+  sportId Int   @map("sport_id")
+  Sport   Sport @relation(fields: [sportId], references: [id], onDelete: Cascade)
+
+  kind     Int
+  rootKind Int @map("root_kind")
+
+  team1Id   Int?    @map("team_1_id")
+  team2Id   Int?    @map("team_2_id")
+  team1     String? @map("team_1")
+  team2     String? @map("team_2")
+  name      String
+  startTime Int     @map("start_time")
+  place     String
+  priority  Int
+
+  eventBlock    EventBlocks?
+  CustomFactors CustomFactors?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("events")
+}
+
+model EventBlocks {
+  eventId Int   @id @map("event_id")
+  event   Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  state String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("event_blocks")
+}
+
+model CustomFactors {
+  e     Int   @id
+  event Event @relation(fields: [e], references: [id], onDelete: Cascade)
+
+  countAll Int @map("count_all")
+
+  factors Json
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("custom_factors")
+}
