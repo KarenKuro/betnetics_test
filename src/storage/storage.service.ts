@@ -6,7 +6,6 @@ import {
   TournamentInfoDTO,
 } from '@common/dtos';
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -110,16 +109,23 @@ export class StorageService {
   }
 
   async saveCustomFactors(data: CustomFactorsDTO): Promise<void> {
+    const plainFactors = data.factors.map((f) => ({
+      f: f.f,
+      v: f.v,
+      p: f.p ?? null,
+      pt: f.pt ?? null,
+    }));
+
     await this.prisma.customFactors.upsert({
       where: { e: data.e },
       create: {
         e: data.e,
         countAll: data.countAll,
-        factors: data.factors as unknown as Prisma.InputJsonValue,
+        factors: plainFactors,
       },
       update: {
         countAll: data.countAll,
-        factors: data.factors as unknown as Prisma.InputJsonValue,
+        factors: plainFactors,
       },
     });
   }
