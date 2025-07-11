@@ -31,10 +31,12 @@ docker-compose up --build
 
 ## Приложение будет доступно по адресу: http://localhost:3000
 
-## Bull Dashboard: http://localhost:3000/\_private/queues-bull/queue/eventBlocks?status=failed
+## Bull Dashboard: http://localhost:3000/_private/queues-bull/queue/eventBlocks?status=failed
 
-## Открытие веб-интерфейса для базы:
+## Открытие веб-интерфейса для базы (внутри контейнера с приложением выполнить команду):
 
 ```bash
 npx prisma studio
 ```
+
+## Интерфейс будет доступен по адресу http://localhost:5555
