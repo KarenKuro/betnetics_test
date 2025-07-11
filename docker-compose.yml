@@ -17,7 +17,6 @@ services:
       - pgdata:/var/lib/postgresql/data
     ports:
       - '5433:5432'
-      - '5555:5555'
     networks:
       - betnetics
 
@@ -38,6 +37,7 @@ services:
       - redis
     ports:
       - '3000:3000'
+      - '5555:5555'
     environment:
       DATABASE_URL: 'postgresql://postgres:postgres@postgres:5432/betnetics_test'
       REDIS_HOST: redis

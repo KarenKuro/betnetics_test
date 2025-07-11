@@ -36,6 +36,7 @@ docker-compose up --build
 ## Открытие веб-интерфейса для базы (внутри контейнера с приложением выполнить команду):
 
 ```bash
+docker exec -it betnetics_test sh
 npx prisma studio
 ```
 
