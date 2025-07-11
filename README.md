@@ -19,13 +19,11 @@ cp .env.example .env
 
 ## 3. Запуск через Docker Compose
 
-# Проект состоит из трёх контейнеров:
+Проект состоит из трёх контейнеров:
 
-# Приложение NestJS
-
-# PostgreSQL
-
-# Redis
+1.  Приложение NestJS
+2.  PostgreSQL
+3.  Redis
 
 ```bash
 docker-compose up --build
