@@ -33,7 +33,7 @@ docker-compose up --build
 
 ## Bull Dashboard: http://localhost:3000/_private/queues-bull/queue/eventBlocks?status=failed
 
-## Открытие веб-интерфейса для базы (внутри контейнера с приложением выполнить команду):
+## Открытие веб-интерфейса для базы :
 
 ```bash
 docker exec -it betnetics_test sh
