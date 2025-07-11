@@ -1,6 +1,8 @@
+#!/usr/bin/env bash
+set -e
 
 # Ждем, пока база данных будет доступна на порту 5432
-until nc -z -v -w30 db 5432; do
+until nc -z -v -w30 postgres 5432; do
   echo "Waiting for database connection..."
   sleep 1
 done
