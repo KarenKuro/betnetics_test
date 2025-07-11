@@ -17,6 +17,8 @@ services:
       - pgdata:/var/lib/postgresql/data
     ports:
       - '5433:5432'
+    networks:
+      - betnetics
 
   redis:
     image: redis:latest
@@ -24,6 +26,8 @@ services:
     restart: always
     ports:
       - '6380:6379'
+    networks:
+      - betnetics
 
   app:
     build: .
@@ -37,10 +41,13 @@ services:
       DATABASE_URL: 'postgresql://postgres:postgres@postgres:5432/betnetics_test'
       REDIS_HOST: redis
       REDIS_PORT: 6379
-    entrypoint: ["./wait-for-it.sh", "postgres:5432", "--"] 
-    command: sh -c "npx prisma migrate deploy && npm run start:dev"
     volumes:
       - .:/app
+    networks:
+      - betnetics
 
 volumes:
   pgdata:
+
+networks:
+  betnetics:

@@ -1,5 +1,7 @@
 FROM node:20-alpine
 
+RUN apk add --no-cache bash
+
 WORKDIR /app
 
 COPY package*.json ./
@@ -8,10 +10,13 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
-
-RUN npm install -g prisma
-
 RUN npx prisma generate
 
-CMD ["npm", "run", "start:dev"]
+RUN npm run build
+
+EXPOSE 3000
+
+COPY wait-for-db.sh /app/wait-for-db.sh
+RUN chmod +x /app/wait-for-db.sh
+
+CMD ["/bin/bash", "/app/wait-for-db.sh"]
